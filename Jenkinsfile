@@ -16,11 +16,7 @@ volumes: [
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
  
 
-    stage('Build') {
-      container('gradle') {
-        sh "gradle build"
-      }
-    }
+
     stage('Create Docker images') {
       container('docker') {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
