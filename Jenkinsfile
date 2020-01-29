@@ -25,8 +25,8 @@ volumes: [
           passwordVariable: 'Password']]) {
           sh """
             docker login -u ${Username} -p ${Password}
-            docker build -t eu.gcr.io/publicismedia-cortex-216901/test-base-image:${gitCommit} .
-            docker push eu.gcr.io/publicismedia-cortex-216901/test-base-image:${gitCommit}
+            docker build -t my-base-image:${gitCommit} .
+            docker push my-base-image:${gitCommit}
             """
         }
       }
