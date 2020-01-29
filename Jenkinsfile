@@ -19,9 +19,14 @@ volumes: [
 
     stage('Create Docker images') {
       container('docker') {
-        withDockerRegistry([ credentialsId: "dockerhub", url: "" ])
-           docker build -t my-base-image:${gitCommit} .
-           docker push my-base-image:${gitCommit}
+        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]),
+          credentialsId: 'dockerhub',
+          usernameVariable: 'Username',
+          passwordVariable: 'Password']]) {
+          sh """
+            docker build -t my-base-image:${gitCommit} .
+            docker push my-base-image:${gitCommit}
+            """
         }
       }
     }
