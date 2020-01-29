@@ -1,2 +1,0 @@
-FROM jenkins/jnlp-slave:3.27-1
-RUN apt-get install docker -y
