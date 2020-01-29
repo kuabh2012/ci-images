@@ -6,7 +6,7 @@
 #
 
 # Pull base image.
-FROM dockerfile/ubuntu
+FROM eu.gcr.io/publicismedia-cortex-216901/test-base-image
 
 # Install Java.
 RUN \
