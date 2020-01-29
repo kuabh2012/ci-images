@@ -10,12 +10,14 @@ node {
     def app
 
     stage('Clone repository') {
+		container('docker') {
         /* Let's make sure we have the repository cloned to our workspace */
 
         checkout scm
     }
 
     stage('Build image') {
+		container('docker')
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
@@ -23,6 +25,7 @@ node {
     }
 
     stage('Test image') {
+		container('docker')
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
 
@@ -32,6 +35,7 @@ node {
     }
 
     stage('Push image') {
+		container('docker')
         /* Finally, we'll push the image with two tags:
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
@@ -43,3 +47,4 @@ node {
     }
 }
 }
+
