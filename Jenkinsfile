@@ -14,22 +14,17 @@ volumes: [
     def gitBranch = myRepo.GIT_BRANCH
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
- 
+
 
 
     stage('Create Docker images') {
       container('docker') {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding',
-          credentialsId: 'dockerhub',
-          usernameVariable: 'Username',
-          passwordVariable: 'Password']]) {
-          sh """
-            docker login -u ${Username} -p ${Password}
-            docker build -t my-base-image:${gitCommit} .
-            docker push my-base-image:${gitCommit}
-            """
+        withDockerRegistry([ credentialsId: "dockerhub", url: "" ])
+           docker build -t my-base-image:${gitCommit} .
+           docker push my-base-image:${gitCommit}
         }
       }
     }
   }
 }
+
