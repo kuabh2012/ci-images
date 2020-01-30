@@ -14,15 +14,13 @@ volumes: [
 
   stage('Build image') {
 	container('docker') {
-    sh """
-    docker build -t my-base-image:${gitCommit} .
-    """    
+    dockerImage = docker.build()      
   }
 
   stage('Push image') {
 	container('docker') {
     withDockerRegistry([ credentialsId: "dockerhub", url: "https://registry.hub.docker.com" ]) {
-      dockerImage.push("gitCommit")          
+      dockerImage.push("latest")          
     }
   }
   }
