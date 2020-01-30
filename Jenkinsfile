@@ -14,13 +14,13 @@ volumes: [
 
   stage('Build image') {
 	container('docker') {
-    dockerImage = docker.build("kuabh2012/ci-image")      
+    dockerImage = docker build -t kuabh2012:${gitCommit}      
   }
 
   stage('Push image') {
 	container('docker') {
     withDockerRegistry([ credentialsId: "dockerhub", url: "https://registry.hub.docker.com" ]) {
-      dockerImage.push("latest")          
+      dockerImage.push("gitCommit")          
     }
   }
   }
