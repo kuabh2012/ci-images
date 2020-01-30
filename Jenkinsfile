@@ -14,7 +14,9 @@ volumes: [
 
   stage('Build image') {
 	container('docker') {
-    dockerImage = docker build -t kuabh2012:${gitCommit}      
+    sh """
+    docker build -t my-base-image:${gitCommit} .
+    """    
   }
 
   stage('Push image') {
