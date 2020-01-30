@@ -26,11 +26,14 @@ volumes: [
           sh """
             docker build -t my-base-image:${gitCommit} .
 			docker login -u ${Username} -p ${Password}
-            docker push my-base-image:${gitCommit}
             """
         }
       }
     }
+	stage('Push image') {
+       withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+        bat "docker push my-base-image:${gitCommit}"
+        }
   }
 }
 
