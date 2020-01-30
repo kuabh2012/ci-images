@@ -9,32 +9,18 @@ volumes: [
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
 ]) {
   node(label) {
-    def myRepo = checkout scm
-    def gitCommit = myRepo.GIT_COMMIT
-    def gitBranch = myRepo.GIT_BRANCH
-    def shortGitCommit = "${gitCommit[0..10]}"
-    def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
+  checkout scm
+  def dockerImage
 
+  stage('Build image') {
+    dockerImage = docker.build("username/repository:tag")
+  }
 
-
-    stage('Create Docker images') {
-      container('docker') {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding',
-          credentialsId: 'dockerhub',
-          usernameVariable: 'Username',
-          passwordVariable: 'Password']]) {
-          sh """
-            docker build -t my-base-image:${gitCommit} .
-			docker login -u ${Username} -p ${Password}
-            """
-        }
-      }
+  stage('Push image') {
+    docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub') {
+      dockerImage.push()
     }
-	stage('Push image') {
-       withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-          sh """
-            docker push my-base-image:${gitCommit}
-            """
-        }
+  }
   }
 }
+
