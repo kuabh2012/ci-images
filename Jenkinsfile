@@ -32,8 +32,9 @@ volumes: [
     }
 	stage('Push image') {
        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-        bat "docker push my-base-image:${gitCommit}"
+          sh """
+            docker push my-base-image:${gitCommit}
+            """
         }
   }
 }
-
