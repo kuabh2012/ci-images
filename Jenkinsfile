@@ -14,7 +14,7 @@ volumes: [
 
   stage('Build image') {
 	container('docker') {
-    dockerImage = docker.build("username/repository:tag")
+    dockerImage = docker build -t my-base-image:${gitCommit} .
   }
 
   stage('Push image') {
