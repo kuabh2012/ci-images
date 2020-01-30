@@ -8,7 +8,7 @@
 	  hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
 	  hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
 	]) {
-	  node(label) {
+	node(label) {
 	  checkout scm
 	  def dockerImage
 
@@ -17,16 +17,13 @@
 		dockerImage = docker.build("username/repository:tag")
 	  }
 
-	stage('Push image') {
-		withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-			def registry_url = "registry.hub.docker.com/"
-				docker login -u $USER -p $PASSWORD ${registry_url}
-				docker.withRegistry("http://${registry_url}", "docker-hub-credentials") {
-				// Push your image now
-				dockerImage.push
-			}
+	  stage('Push image') {
+		container('docker') {
+		docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+		  dockerImage.push()
 		}
-	}
+	  }
+}
 }
 }
 }
