@@ -14,7 +14,7 @@
 
 	  stage('Build image') {
 		container('docker') {
-		dockerImage = docker.build("kuabh2012/ci-image:tag")
+		dockerImage = docker.build("kuabh2012/ci-image:${BUILD_NUMBER}")
 
 	  stage('Push image') {
 		container('docker') {

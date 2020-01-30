@@ -6,7 +6,7 @@
 #
 
 # Pull base image.
-FROM eu.gcr.io/publicismedia-cortex-216901/test-base-image
+FROM ubuntu
 
 # Install Java.
 RUN apt-get update 
