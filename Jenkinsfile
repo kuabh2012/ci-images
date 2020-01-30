@@ -23,7 +23,7 @@
 			bat "docker login -u $USER -p $PASSWORD ${registry_url}"
 			docker.withRegistry("http://${registry_url}", "docker-hub-credentials") {
 				// Push your image now
-				bat "dockerImage.push("${env.BUILD_NUMBER}")"
+				dockerImage.push
 			}
 		}
 	}
