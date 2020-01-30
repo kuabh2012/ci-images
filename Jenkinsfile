@@ -14,8 +14,7 @@
 
 	  stage('Build image') {
 		container('docker') {
-		dockerImage = docker.build("username/repository:tag")
-	  }
+		dockerImage = docker.build("kuabh2012/ci-image:tag")
 
 	  stage('Push image') {
 		container('docker') {
@@ -23,7 +22,6 @@
 		  dockerImage.push()
 		}
 	  }
-}
 }
 }
 }
