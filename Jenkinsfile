@@ -14,7 +14,7 @@ volumes: [
 
   stage('Build image') {
 	container('docker') {
-    dockerImage = docker.build("kuabh2012/ci-image")       app = docker.build("kuabh2012/ci-image")
+    dockerImage = docker.build("kuabh2012/ci-image")      
   }
 
   stage('Push image') {
