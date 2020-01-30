@@ -19,7 +19,7 @@ volumes: [
 
   stage('Push image') {
 	container('docker') {
-    withDockerRegistry([ credentialsId: "dockerhub", url: "https://hub.docker.com/u/kuabh2012" ]) {
+    withDockerRegistry([ credentialsId: "dockerhub", url: "docker.io" ]) {
       dockerImage.push()
     }
   }
