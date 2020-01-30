@@ -14,13 +14,13 @@ volumes: [
 
   stage('Build image') {
 	container('docker') {
-    dockerImage = docker.build("username/repository:tag")
+    dockerImage = docker.build("kuabh2012/ci-image")       app = docker.build("kuabh2012/ci-image")
   }
 
   stage('Push image') {
 	container('docker') {
     withDockerRegistry([ credentialsId: "dockerhub", url: "https://registry.hub.docker.com" ]) {
-      dockerImage.push(dockerImage)
+      dockerImage.push("latest")          
     }
   }
   }
